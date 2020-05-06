@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require('./paylater_service.rb')
+require_relative './paylater_service.rb'
+require_relative './services/validations_service/command_validation_service.rb'
 
 def initiate_service
   puts greeting_message
@@ -14,11 +15,19 @@ end
 
 def process_inputs
   loop do
+    puts '*****************************************************************'
     user_input = gets.chomp
-    puts user_input
     # TODO: - Is valid input -> pass it to PaykaterService else throw error.
-    # (isvalid user_input) ? PaylaterService.new(user_input) : invalid_input_message
+    valid?(user_input) ? PaylaterService.new(user_input) : invalid_input_message
   end
+end
+
+def valid?(command)
+  CommandValidationService.validate command
+end
+
+def invalid_input_message
+  puts 'Invalid command. Please try again'
 end
 
 initiate_service
