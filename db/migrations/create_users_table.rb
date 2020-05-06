@@ -4,13 +4,13 @@ require_relative '../db_initiation.rb'
 
 class CreateUserTable < ActiveRecord::Migration[5.2]
   def up
-    unless ActiveRecord::Base.connection.table_exists?(:users)
-      create_table :users do |table|
-        table.string :name
-        table.string :email
-        table.float :credit_limit
-        table.timestamps
-      end
+    return if ActiveRecord::Base.connection.table_exists?(:users)
+
+    create_table :users do |table|
+      table.string :name
+      table.string :email
+      table.float :credit_limit
+      table.timestamps
     end
   end
 
