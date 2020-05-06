@@ -17,8 +17,11 @@ def process_inputs
   loop do
     puts '*****************************************************************'
     user_input = gets.chomp
-    # TODO: - Is valid input -> pass it to PaykaterService else throw error.
-    valid?(user_input) ? PaylaterService.new(user_input) : invalid_input_message
+    if valid?(user_input)
+      PaylaterService.new(user_input).process
+    else
+      invalid_input_message
+    end
   end
 end
 
