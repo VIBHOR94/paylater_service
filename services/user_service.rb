@@ -9,7 +9,7 @@ class UserService
 
   def create_user
     if @user.save
-      puts "#{user_name} (#{credit_limit})"
+      puts "#{@user["name"]} (#{@user["credit_limit"]})"
     else
       puts 'Following error/s occured while creating the record'
       puts @user.errors.full_messages
