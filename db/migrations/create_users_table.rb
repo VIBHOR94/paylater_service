@@ -2,7 +2,7 @@
 
 require_relative '../db_initiation.rb'
 
-class CreateUserTable < ActiveRecord::Migration[5.2]
+class CreateUsersTable < ActiveRecord::Migration[5.2]
   def up
     return if ActiveRecord::Base.connection.table_exists?(:users)
 
@@ -20,7 +20,7 @@ class CreateUserTable < ActiveRecord::Migration[5.2]
 end
 
 # Create the table
-CreateUserTable.migrate(:up)
+CreateUsersTable.migrate(:up)
 
 # Drop the table
-# CreateUserTable.migrate(:down)
+# CreateUsersTable.migrate(:down)
