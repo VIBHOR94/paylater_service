@@ -74,8 +74,8 @@ class CommandValidationService
     discount_percentage = command_args[4]
 
     (TermValidationService.valid_name? merchant_name) &&
-    (TermValidationService.valid_email? merchant_email) &&
-    (TermValidationService.valid_percentage? discount_percentage)
+      (TermValidationService.valid_email? merchant_email) &&
+      (TermValidationService.valid_percentage? discount_percentage)
   end
 
   def self.validate_new_txn_command(command_args)
