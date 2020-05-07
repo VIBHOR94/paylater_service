@@ -1,20 +1,17 @@
 # frozen_string_literal: true
 
-require_relative './services/creation_services/user_creation_service.rb'
+require_relative './services/user_service.rb'
 
 class PaylaterService
-  def initialize(command)
-    @command = command
+  def self.process(command)
+    return unless new_user_command?(command)
+
+    user = UserService.fetch_user_instance(command)
+    UserService.new(user).create_user
   end
 
-  def process
-    return UserCreationService.process(@command) if new_user_command?
-  end
-
-  private
-
-  def new_user_command?
-    command_args = @command.split(' ')
+  def self.new_user_command?(command)
+    command_args = command.split(' ')
     (command_args[0] == 'new') && (command_args[1] == 'user')
   end
 end

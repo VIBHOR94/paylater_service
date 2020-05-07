@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TermValidationService
+  # TODO: - Move it to specific models once all the models are completed
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
 
   def self.valid_name?(input_name)

@@ -18,7 +18,7 @@ def process_inputs
     puts '*****************************************************************'
     user_input = gets.chomp
     if valid?(user_input)
-      PaylaterService.new(user_input).process
+      PaylaterService.process(user_input)
     else
       invalid_input_message
     end
