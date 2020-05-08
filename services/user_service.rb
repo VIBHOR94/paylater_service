@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require_relative '../models/user'
+require_relative './application_service.rb'
 
-class UserService
+class UserService < ApplicationService
   def initialize(user)
     @user = user
   end
 
   def create_user
     if @user.save
-      puts "#{@user["name"]} (#{@user["credit_limit"]})"
+      puts "#{@user['name']} (#{@user['credit_limit']})"
     else
       puts 'Following error/s occured while creating the record'
       puts @user.errors.full_messages
