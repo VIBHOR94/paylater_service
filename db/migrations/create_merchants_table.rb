@@ -2,7 +2,7 @@
 
 require_relative '../db_initiation.rb'
 
-class CreateMerchantTable < ActiveRecord::Migration[5.2]
+class CreateMerchantsTable < ActiveRecord::Migration[5.2]
   def up
     return if ActiveRecord::Base.connection.table_exists?(:merchants)
 
@@ -22,7 +22,7 @@ class CreateMerchantTable < ActiveRecord::Migration[5.2]
 end
 
 # Create the table
-CreateMerchantTable.migrate(:up)
+CreateMerchantsTable.migrate(:up)
 
 # Drop the table
-# CreateMerchantTable.migrate(:down)
+# CreateMerchantsTable.migrate(:down)
