@@ -33,4 +33,12 @@ class User < ApplicationRecord
     self.dues += withdrawl_amount
     save!
   end
+
+  def self.exhausted_limit_users
+    where('dues = credit_limit').pluck(:name)
+  end
+
+  def self.fetch_name_and_dues
+    select('name, dues')
+  end
 end

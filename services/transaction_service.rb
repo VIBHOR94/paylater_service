@@ -30,11 +30,8 @@ class TransactionService < ApplicationService
 
     return if entity_check_failed?(user_id, merchant_id)
 
-    Transaction.new(
-      user_id: user_id,
-      merchant_id: merchant_id,
-      transaction_amount: amount
-    )
+    Transaction.new(user_id: user_id, merchant_id: merchant_id,
+                    transaction_amount: amount)
   end
 
   def self.entity_check_failed?(user_id, merchant_id)
@@ -48,24 +45,27 @@ class TransactionService < ApplicationService
   def initiate_transaction
     # Trigger a mail to user about beginning of txn
     # During transaction and save it in transaction table
-    ActiveRecord::Base.transaction do
-      user = User.find(@transaction.user_id)
-      user.lock!
-      @transaction.lock!
-      discount_percentage = Merchant.find(
-        @transaction.merchant_id
-      ).discount_percentage
-      @transaction.process_merchant_amount(discount_percentage)
-      user.withdraw(@transaction.transaction_amount)
-      @transaction.success.save!
-    end
+    process_transaction
   rescue StandardError => e
     @error_message = e.message
-    @transaction.process_merchant_amount(100)
+    @transaction.merchant_amount = 0
     @transaction.failed(@error_message).save!
   end
 
   def successfull_transaction?
     @error_message.nil?
+  end
+
+  def process_transaction
+    ActiveRecord::Base.transaction do
+      user = User.find(@transaction.user_id)
+      user.lock!
+      @transaction.lock!
+      discount_percentage = Merchant.find(@transaction.merchant_id)
+                                    .discount_percentage
+      @transaction.process_merchant_amount(discount_percentage)
+      user.withdraw(@transaction.transaction_amount)
+      @transaction.success.save!
+    end
   end
 end

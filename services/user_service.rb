@@ -46,4 +46,32 @@ class UserService < ApplicationService
     user['dues'] -= amount
     UserService.new(user).update_user
   end
+
+  def self.dues_info(command)
+    command_args = command.split(' ')
+    user_name = command_args[2]
+
+    user = User.find_by(name: user_name)
+    return puts('User not found') unless user
+
+    puts user.dues
+  end
+
+  def self.exhausted_limit_user_names
+    users = User.exhausted_limit_users
+    if users.empty?
+      puts 'No user with exhausted credit limit'
+    else
+      puts users
+    end
+  end
+
+  def self.report_all_dues
+    users_and_dues_info = User.fetch_name_and_dues
+    return (puts 'No user found') if users_and_dues_info.empty?
+
+    users_and_dues_info.each do |user_detail|
+      puts "#{user_detail.name}: #{user_detail.dues}"
+    end
+  end
 end
