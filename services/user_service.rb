@@ -18,7 +18,8 @@ class UserService < ApplicationService
 
   def update_user
     if @user.save
-      puts "#{@user['name']} updated. New credit limit is (#{@user['credit_limit']})"
+      puts "#{@user['name']} updated.
+            New credit limit is (#{@user['credit_limit']})"
     else
       puts 'Following error/s occured while updating the record'
       puts @user.errors.full_messages

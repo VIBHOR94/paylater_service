@@ -10,7 +10,9 @@ class PaylaterApplication
         return send("trigger_#{entity}_service", command, 'new')
       end
     end
-    return trigger_merchant_service(command, 'update') if update_merchant?(command)
+    if update_merchant?(command)
+      return trigger_merchant_service(command, 'update')
+    end
     return trigger_user_service(command, 'payback') if user_payback?(command)
   end
 
