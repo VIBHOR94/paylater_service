@@ -90,10 +90,11 @@ class CommandValidationService
   end
 
   def self.validate_update_merchant_command(command_args)
-    return false unless command_args.length.equal? 4
+    return false unless command_args.length.equal? 5
+    return false unless %w[interest].include? command_args[3]
 
     merchant_name = command_args[2]
-    discount_percentage = command_args[3]
+    discount_percentage = command_args[4]
 
     (TermValidationService.valid_name? merchant_name) &&
       (TermValidationService.valid_percentage? discount_percentage)

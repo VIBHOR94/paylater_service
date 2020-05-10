@@ -10,17 +10,13 @@ class Transaction < ApplicationRecord
 
   validates :amount, presence: true
 
-  def success_save
-    # Method can be used later to trigger email to user and merchant
-    # via some kind f delayed job
+  def success
     self.status = 'SUCCESS'
-    save!
+    self
   end
 
-  def fail_save(message)
-    # Method can be used later to trigger email to user and internal team
-    # via some kind f delayed job for checking error
+  def failed(message)
     self.status = "FAILED - #{message}"
-    save!
+    self
   end
 end
