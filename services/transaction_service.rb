@@ -9,8 +9,12 @@ class TransactionService < ApplicationService
   def transact
     initiate_transaction
     if successfull_transaction?
+      # Can be used to trigger a mail to user and merchant
+      # via NotificationService through delayed job
       puts 'success!'
     else
+      # Can be used to trigger a mail to user and internal error reviewal team
+      # via NotificationService through delayed job
       puts "rejected! (reason: #{@error_message})"
     end
   end
@@ -39,19 +43,19 @@ class TransactionService < ApplicationService
 
   def initiate_transaction
     user = User.find(@transaction.user_id)
+    # Trigger a mail to user about beginning of txn
     amount = @transaction.amount
 
     begin
       ActiveRecord::Base.transaction do
         user.lock!
         @transaction.lock!
-
         user.withdraw(amount)
-        @transaction.success_save
+        @transaction.success.save!
       end
     rescue StandardError => e
       @error_message = e.message
-      @transaction.fail_save(@error_message)
+      @transaction.failed(@error_message).save!
     end
   end
 

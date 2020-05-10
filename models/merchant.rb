@@ -11,4 +11,5 @@ class Merchant < ApplicationRecord
   validates :name, uniqueness: true
   validates :email, uniqueness: true
   validates :discount_percentage, presence: true
+  validates :discount_percentage, inclusion: 0..100
 end
