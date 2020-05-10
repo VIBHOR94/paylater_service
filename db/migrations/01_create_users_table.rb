@@ -10,6 +10,7 @@ class CreateUsersTable < ActiveRecord::Migration[5.2]
       table.string :name
       table.string :email
       table.float :credit_limit
+      table.float :dues
       table.timestamps
     end
   end

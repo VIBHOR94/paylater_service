@@ -7,7 +7,8 @@ class CreateTransactionsTable < ActiveRecord::Migration[5.2]
     return if ActiveRecord::Base.connection.table_exists?(:transactions)
 
     create_table :transactions do |table|
-      table.float :amount
+      table.float :transaction_amount
+      table.float :merchant_amount
       table.string :status
       table.timestamps
     end
