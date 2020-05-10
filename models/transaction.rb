@@ -24,8 +24,10 @@ class Transaction < ApplicationRecord
     self
   end
 
-  def set_merchant_amount(percentage_discount)
-    self.merchant_amount = (self.transaction_amount * (100 - percentage_discount.to_f)).to_f / 100
+  def process_merchant_amount(percentage_discount)
+    percentage_discount = percentage_discount.to_f
+    self.merchant_amount = (transaction_amount * (100 - percentage_discount))
+                           .to_f / 100
     self
   end
 end

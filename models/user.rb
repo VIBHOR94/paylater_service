@@ -23,11 +23,11 @@ class User < ApplicationRecord
   end
 
   def available_credit
-    self.credit_limit - self.dues
+    credit_limit - dues
   end
 
   def withdraw(withdrawl_amount)
-    can_withdraw = self.credit_limit >= (self.dues + withdrawl_amount.to_f)
+    can_withdraw = credit_limit >= (dues + withdrawl_amount.to_f)
     raise 'Insufficient credit to perform transaction' unless can_withdraw
 
     self.dues += withdrawl_amount

@@ -30,7 +30,11 @@ class TransactionService < ApplicationService
 
     return if entity_check_failed?(user_id, merchant_id)
 
-    Transaction.new(user_id: user_id, merchant_id: merchant_id, transaction_amount: amount)
+    Transaction.new(
+      user_id: user_id,
+      merchant_id: merchant_id,
+      transaction_amount: amount
+    )
   end
 
   def self.entity_check_failed?(user_id, merchant_id)
@@ -48,15 +52,17 @@ class TransactionService < ApplicationService
       user = User.find(@transaction.user_id)
       user.lock!
       @transaction.lock!
-      discount_percentage = Merchant.find(@transaction.merchant_id).discount_percentage
-      @transaction.set_merchant_amount(discount_percentage)
+      discount_percentage = Merchant.find(
+        @transaction.merchant_id
+      ).discount_percentage
+      @transaction.process_merchant_amount(discount_percentage)
       user.withdraw(@transaction.transaction_amount)
       @transaction.success.save!
     end
-    rescue StandardError => e
-      @error_message = e.message
-      @transaction.set_merchant_amount(100)
-      @transaction.failed(@error_message).save!
+  rescue StandardError => e
+    @error_message = e.message
+    @transaction.process_merchant_amount(100)
+    @transaction.failed(@error_message).save!
   end
 
   def successfull_transaction?
