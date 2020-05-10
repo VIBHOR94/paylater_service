@@ -18,8 +18,7 @@ class UserService < ApplicationService
 
   def update_user
     if @user.save
-      puts "#{@user['name']} updated.
-            New credit limit is (#{@user['credit_limit']})"
+      puts "(dues: #{@user['dues']})"
     else
       puts 'Following error/s occured while updating the record'
       puts @user.errors.full_messages
@@ -44,7 +43,7 @@ class UserService < ApplicationService
     user = User.find_by(name: user_name)
     return puts('User not found') unless user
 
-    user['credit_limit'] += amount
+    user['dues'] -= amount
     UserService.new(user).update_user
   end
 end
