@@ -7,7 +7,7 @@ class MerchantService < ApplicationService
 
   def create_merchant
     if @merchant.save
-      puts "#{@merchant['name']} (#{@merchant['discount_percentage']})"
+      puts "#{@merchant['name']} (#{@merchant['discount_percentage']}%)"
     else
       puts 'Following error/s occured while creating the record'
       puts @merchant.errors.full_messages
@@ -67,6 +67,6 @@ class MerchantService < ApplicationService
     merchant = Merchant.find_by(name: merchant_name)
     return puts('Merchant not found') unless merchant
 
-    puts merchant.discount_percentage
+    puts "#{merchant.discount_percentage}%"
   end
 end
