@@ -10,7 +10,10 @@ class PaylaterApplication
         return send("trigger_#{entity}_service", command, 'new')
       end
     end
-    trigger_merchant_service(command, 'update') if update_merchant?(command)
+    if update_merchant?(command)
+      return trigger_merchant_service(command, 'update')
+    end
+    return trigger_user_service(command, 'payback') if user_payback?(command)
   end
 
   def self.new_command?(command, entity)
@@ -24,10 +27,14 @@ class PaylaterApplication
   end
 
   def self.trigger_user_service(command, operation)
-    return unless operation == 'new'
+    return unless %w[new payback].include?(operation)
 
-    user = UserService.fetch_user_instance(command)
-    UserService.new(user).create_user
+    if operation == 'new'
+      user = UserService.fetch_user_instance(command)
+      UserService.new(user).create_user
+    elsif operation == 'payback'
+      UserService.payback(command)
+    end
   end
 
   def self.trigger_merchant_service(command, operation)
@@ -44,5 +51,10 @@ class PaylaterApplication
 
     transaction = TransactionService.fetch_transaction_instance(command)
     TransactionService.new(transaction).transact if transaction
+  end
+
+  def self.user_payback?(command)
+    command_args = command.split(' ')
+    command_args[0] == 'payback'
   end
 end

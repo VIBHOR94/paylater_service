@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   validates :name, uniqueness: true
   validates :email, uniqueness: true
+  validates :credit_limit, presence: true
+  validates_numericality_of :credit_limit, greater_than_or_equal_to: 0
 
   def withdraw(amount)
     raise 'Insufficient credit to perform transaction' if credit_limit < amount
