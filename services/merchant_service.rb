@@ -30,7 +30,7 @@ class MerchantService < ApplicationService
 
     merchant_name = command_args[2]
     email = command_args[3]
-    discount_percentage = command_args[4]
+    discount_percentage = command_args[4].delete_suffix('%')
 
     Merchant.new(
       name: merchant_name,
@@ -51,12 +51,22 @@ class MerchantService < ApplicationService
     merchant = Merchant.find_by(name: merchant_name)
     return puts('Merchant not found') unless merchant
 
-    merchant[field_name] = command_args[4]
+    merchant[field_name] = command_args[4].delete_suffix('%')
     MerchantService.new(merchant).update_merchant
   end
 
   def self.fetch_field_name(input)
     # Can be used for another field updation too
     return 'discount_percentage' if input == 'interest'
+  end
+
+  def self.discount_info(command)
+    command_args = command.split(' ')
+
+    merchant_name = command_args[2]
+    merchant = Merchant.find_by(name: merchant_name)
+    return puts('Merchant not found') unless merchant
+
+    puts merchant.discount_percentage
   end
 end
