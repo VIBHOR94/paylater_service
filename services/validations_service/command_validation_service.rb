@@ -18,7 +18,8 @@ class CommandValidationService
 
   def self.valid_for_new_command?(command_args)
     return false unless %w[user merchant txn].include? command_args[1]
-    return send("validate_new_#{command_args[1]}_command", command_args)
+
+    send("validate_new_#{command_args[1]}_command", command_args)
   end
 
   def self.valid_for_update_command?(command_args)
@@ -28,8 +29,7 @@ class CommandValidationService
   end
 
   def self.valid_for_payback_command?(command_args)
-    user_name = command_args[1]
-    amount = command_args[2]
+    command_args.length == 3
   end
 
   def self.valid_for_report_command?(command_args)
@@ -38,6 +38,7 @@ class CommandValidationService
     if %w[users-at-credit-limit total-dues].include? command_args[1]
       return command_args.length == 2
     end
+
     command_args.length == 3
   end
 
@@ -56,6 +57,7 @@ class CommandValidationService
   def self.validate_update_merchant_command(command_args)
     return false unless command_args.length.equal? 5
     return false unless %w[interest].include? command_args[3]
+
     true
   end
 end

@@ -28,6 +28,7 @@ class UserService < ApplicationService
   def process_payback(amount)
     @user.payback(amount)
     return (puts @user.errors.full_messages) unless @user.errors.blank?
+
     update_user
   end
 

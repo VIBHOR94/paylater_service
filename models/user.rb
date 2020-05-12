@@ -8,7 +8,6 @@ class User < ApplicationRecord
   before_validation :validate_dues, on: :update
   before_validation :validate_name, :validate_email
 
-
   has_many :transactions
   has_many :merchants, through: :transactions
 
@@ -49,6 +48,7 @@ class User < ApplicationRecord
 
   def payback(amount)
     return unless validate_amount(amount)
+
     self.dues -= amount.to_f
   end
 
@@ -65,11 +65,16 @@ class User < ApplicationRecord
   end
 
   def validate_dues
-    errors.add(:dues, "Payback #{credit_limit - dues} exceeds ") if dues > credit_limit
+    return unless dues > credit_limit
+
+    errors.add(:dues, "Payback #{credit_limit - dues} exceeds ")
   end
 
   def validate_amount(amount)
-    return true if TermValidationService.valid_amount?(amount) && amount.to_f.positive?
+    if TermValidationService.valid_amount?(amount) && amount.to_f.positive?
+      return true
+    end
+
     errors.add(:dues, "Invalid payback amount #{amount}")
     false
   end
