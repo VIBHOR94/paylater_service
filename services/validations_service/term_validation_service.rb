@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class TermValidationService
-  # TODO: - Move it to specific models once all the models are completed
+  VALID_NAME_REGEX = /^[a-zA-Z\-\`]++(?: [a-zA-Z\-\`]++)?[0-9]*$/i.freeze
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
+  VALID_AMOUNT_REGEX = /^-?\d+\.?\d*$/.freeze
 
   def self.valid_name?(input_name)
-    # Shuould start with alphabet only
-    ('a'..'z').to_a.include? input_name.split('').first
+    !(input_name =~ VALID_NAME_REGEX).nil?
   end
 
   def self.valid_email?(email)
@@ -25,7 +25,7 @@ class TermValidationService
   end
 
   def self.valid_amount?(amount)
-    valid_credit?(amount)
+    !(amount =~ VALID_AMOUNT_REGEX).nil?
   end
 
   def self.valid_float_value?(num)
