@@ -49,7 +49,7 @@ class TransactionService < ApplicationService
   rescue StandardError => e
     @error_message = e.message
     @transaction.merchant_amount = 0
-    @transaction.failed(@error_message).save!
+    @transaction.failed(@error_message).save
   end
 
   def successfull_transaction?

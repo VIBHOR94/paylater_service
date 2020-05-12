@@ -25,6 +25,12 @@ class UserService < ApplicationService
     end
   end
 
+  def process_payback(amount)
+    @user.payback(amount)
+    return (puts @user.errors.full_messages) unless @user.errors.blank?
+    update_user
+  end
+
   def self.fetch_user_instance(command)
     command_args = command.split(' ')
 
@@ -38,13 +44,12 @@ class UserService < ApplicationService
   def self.payback(command)
     command_args = command.split(' ')
     user_name = command_args[1]
-    amount = command_args[2].to_f
+    amount = command_args[2]
 
     user = User.find_by(name: user_name)
     return puts('User not found') unless user
 
-    user['dues'] -= amount
-    UserService.new(user).update_user
+    UserService.new(user).process_payback(amount)
   end
 
   def self.dues_info(command)
