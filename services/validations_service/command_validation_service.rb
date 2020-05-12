@@ -5,7 +5,6 @@ class CommandValidationService
   FIRST_VALID_ARG = %w[new update payback report].freeze
 
   def self.validate(command)
-    command = command.downcase
     command_args = command.split(' ')
 
     return false if command_args.length < 2

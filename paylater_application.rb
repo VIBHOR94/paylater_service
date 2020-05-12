@@ -44,11 +44,11 @@ class PaylaterApplication
   end
 
   def self.new_command?(entity)
-    (@command_args[0] == 'new') && (@command_args[1] == entity)
+    match_params('new', entity)
   end
 
   def self.update_merchant_command?
-    (@command_args[0] == 'update') && (@command_args[1] == 'merchant')
+    match_params('update', 'merchant')
   end
 
   def self.user_payback_command?
@@ -56,19 +56,23 @@ class PaylaterApplication
   end
 
   def self.report_dues_command?
-    @command_args[0] == 'report' && @command_args[1] == 'dues'
+    match_params('report', 'dues')
   end
 
   def self.report_merchant_discount_command?
-    @command_args[0] == 'report' && @command_args[1] == 'discount'
+    match_params('report', 'discount')
   end
 
   def self.report_exhaused_limit_users_command?
-    @command_args[0] == 'report' && @command_args[1] == 'users-at-credit-limit'
+    match_params('report', 'users-at-credit-limit')
   end
 
   def self.report_users_dues_command?
-    @command_args[0] == 'report' && @command_args[1] == 'total-dues'
+    match_params('report', 'total-dues')
+  end
+
+  def self.match_params(first_param, second_param)
+    @command_args[0] == first_param && @command_args[1] == second_param
   end
 
   def self.trigger_user_service(operation)

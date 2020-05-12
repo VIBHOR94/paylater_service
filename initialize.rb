@@ -17,7 +17,7 @@ end
 def process_inputs
   loop do
     puts '*****************************************************************'
-    user_input = gets.chomp
+    user_input = $stdin.gets.chomp.downcase
     return if user_input == 'exit'
 
     if valid?(user_input)
