@@ -5,6 +5,5 @@ source 'https://rubygems.org'
 gem 'activerecord', '~> 5.0', '>= 5.0.0.1'
 gem 'pg', '~> 0.18.4'
 
-group :development do
-  gem 'rubocop', require: false
-end
+gem 'rspec', require: false
+gem 'rubocop', require: false
