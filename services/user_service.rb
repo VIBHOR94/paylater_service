@@ -11,8 +11,7 @@ class UserService < ApplicationService
     if @user.save
       puts "#{@user['name']} (#{@user['credit_limit']})"
     else
-      puts 'Following error/s occured while creating the record'
-      puts @user.errors.full_messages
+      error_message
     end
   end
 
@@ -20,9 +19,13 @@ class UserService < ApplicationService
     if @user.save
       puts "(dues: #{@user['dues']})"
     else
-      puts 'Following error/s occured while updating the record'
-      puts @user.errors.full_messages
+      error_message
     end
+  end
+
+  def error_message
+    puts 'Following error/s occured while saving the record'
+    puts @user.errors.full_messages
   end
 
   def process_payback(amount)
