@@ -1,6 +1,6 @@
 # Paylater Service App
 
-A simple command line application to handle user, merchant and transactions for playlater service. Using this apllication, new users and merchants can be created where user is issued some credit limit using which s/he can perform a transaction for a registered mechant.
+A simple command line application to handle user, merchant and transactions for paylater service. Using this apllication, new users and merchants can be created where user is issued some credit limit using which s/he can perform a transaction for a registered mechant.
 
 Dependencies -
 
