@@ -5,6 +5,7 @@ A simple command line application to handle user, merchant and transactions for 
 Dependencies -
 
 * Postgresql database
+* Ruby 2.6.3
 
 ### Installing
 
