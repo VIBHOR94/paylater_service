@@ -35,7 +35,6 @@ class User < ApplicationRecord
     raise 'Insufficient credit to perform transaction' unless can_withdraw
 
     self.dues += withdrawl_amount
-    save!
   end
 
   def self.exhausted_limit_users
@@ -55,11 +54,15 @@ class User < ApplicationRecord
   private
 
   def validate_name
+    return unless name
+
     errors.add(:name, "Invalid name #{name}") unless
      TermValidationService.valid_name?(name)
   end
 
   def validate_email
+    return unless email
+
     errors.add(:email, "Invalid email #{email}") unless
      TermValidationService.valid_email?(email)
   end

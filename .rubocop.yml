@@ -1,0 +1,8 @@
+AllCops:
+  Exclude:
+    - '*.cfg'
+    - '*.yml'
+    - 'Gemfile'
+    - db/migrations/**
+Documentation:
+  Enabled: false

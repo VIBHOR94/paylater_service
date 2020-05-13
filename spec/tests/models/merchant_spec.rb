@@ -6,7 +6,7 @@ require_relative '../../../models/merchant.rb'
 RSpec.describe Merchant do
   describe 'Checks all the validations' do
     let(:alphabets) { ('a'..'z').to_a + ('A'..'Z').to_a }
-    let(:non_alphabets) { (0..9).to_a + %w[+ - _ $ %] }
+    let(:non_alphabets) { (0..9).to_a + %w[+ _ $ %] }
 
     after(:each) { Merchant.delete_all }
 
@@ -90,6 +90,8 @@ RSpec.describe Merchant do
       merchant.save
 
       expect(merchant.errors[:email].present?).to be(true)
+      expect(merchant.errors[:email].first)
+        .to eq("Invalid email #{invalid_email}")
     end
 
     it 'throws error for no dicount percentage' do
@@ -116,7 +118,7 @@ RSpec.describe Merchant do
         .to eq('must be less than or equal to 100')
     end
 
-    it 'accepts dicount percentage < 100 and > 0' do
+    it 'accepts dicount percentage > 0 and < 100' do
       merchant = Merchant.new(discount_percentage: (0..100).to_a.sample)
       merchant.save
       expect(merchant.errors[:discount_percentage].present?).to be(false)

@@ -65,6 +65,7 @@ class TransactionService < ApplicationService
                                     .discount_percentage
       @transaction.process_merchant_amount(discount_percentage)
       user.withdraw(@transaction.transaction_amount)
+      user.save!
       @transaction.success.save!
     end
   end
