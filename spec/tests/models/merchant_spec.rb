@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rspec'
-require_relative '../../models/merchant.rb'
+require_relative '../../../models/merchant.rb'
 
 RSpec.describe Merchant do
   describe 'Checks all the validations' do
