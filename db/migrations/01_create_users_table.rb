@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../db_initiation.rb'
+load 'db/db_initiation.rb'
 
 class CreateUsersTable < ActiveRecord::Migration[5.2]
   def up
