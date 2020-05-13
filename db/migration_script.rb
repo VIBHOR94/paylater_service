@@ -7,7 +7,7 @@ def run_migrations
   end
 end
 
-#Run for development database
+# Run for development database
 run_migrations
 
 # Run for test database

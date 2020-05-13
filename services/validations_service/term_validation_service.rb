@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TermValidationService
-  VALID_NAME_REGEX = /^[a-zA-Z\-\`]++(?: [a-zA-Z\-\`]++)?[0-9]*$/i.freeze
+  VALID_NAME_REGEX = /^[a-zA-Z]+$/i.freeze
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   VALID_AMOUNT_REGEX = /^-?\d+\.?\d*$/.freeze
 
