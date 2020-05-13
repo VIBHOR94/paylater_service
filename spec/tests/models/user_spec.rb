@@ -4,11 +4,10 @@ require 'rspec'
 require_relative '../../../models/user.rb'
 
 RSpec.describe User do
+  after(:each) { User.delete_all }
   describe 'Checks all the validations' do
     let(:alphabets) { ('a'..'z').to_a + ('A'..'Z').to_a }
     let(:non_alphabets) { (0..9).to_a + %w[+ _ $ %] }
-
-    after(:each) { User.delete_all }
 
     it 'throws error for empty name' do
       user = User.new
@@ -118,6 +117,35 @@ RSpec.describe User do
       expect(user.errors[:credit_limit].present?).to be(false)
     end
 
+    it 'throws error for withdraw more than credit limit' do
+      user = User.create(
+        name: 'user1234',
+        email: 'xyz@abc.com',
+        credit_limit: (1000..10_000).to_a.sample
+      )
+
+      user.withdraw(user.credit_limit + 100)
+    rescue StandardError => e
+      expect(e.message).to eq('Insufficient credit to perform transaction')
+    end
+  end
+
+  describe 'Methods' do
+    it 'accepts payback amount' do
+      user = User.create(
+        name: 'user1234',
+        email: 'xyz@abc.com',
+        credit_limit: 7000
+      )
+
+      user.withdraw(400)
+      user.payback(300)
+      user.save
+      user.reload
+
+      expect(user.dues).to eq(100.to_f)
+    end
+
     it 'set dues to 0.0' do
       user = User.create(
         name: 'user1',
@@ -140,33 +168,6 @@ RSpec.describe User do
       user.reload
 
       expect(user.available_credit).to be((user.credit_limit - 700).to_f)
-    end
-
-    it 'throws error for withdraw more than credit limit' do
-      user = User.create(
-        name: 'user1234',
-        email: 'xyz@abc.com',
-        credit_limit: (1000..10_000).to_a.sample
-      )
-
-      user.withdraw(user.credit_limit + 100)
-    rescue StandardError => e
-      expect(e.message).to eq('Insufficient credit to perform transaction')
-    end
-
-    it 'accepts payback amount' do
-      user = User.create(
-        name: 'user1234',
-        email: 'xyz@abc.com',
-        credit_limit: 7000
-      )
-
-      user.withdraw(400)
-      user.payback(300)
-      user.save
-      user.reload
-
-      expect(user.dues).to eq(100.to_f)
     end
   end
 end
