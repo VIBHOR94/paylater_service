@@ -26,4 +26,6 @@ Dependencies -
 
 * Run `ruby db/migration_script.rb`
 
-* Run `ruby initialize.rb` to start the application.
+* Run `ruby initialize.rb` to start the application
+
+* Run `rspec` to start the application.
