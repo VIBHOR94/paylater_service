@@ -24,7 +24,7 @@ class TermValidationService
   end
 
   def self.valid_amount?(amount)
-    amount.is_a? Numeric
+    (amount.is_a? Numeric) || (amount.to_i.to_s == amount)
   end
 
   def self.valid_float_value?(num)

@@ -79,8 +79,11 @@ class UserService < ApplicationService
     users_and_dues_info = User.fetch_name_and_dues
     return (puts 'No user found') if users_and_dues_info.empty?
 
-    users_and_dues_info.each do |user_detail|
-      puts "#{user_detail.name}: #{user_detail.dues}"
+    total_dues = 0
+    users_and_dues_info.each do |users_detail|
+      puts "#{users_detail.name}: #{users_detail.dues}"
+      total_dues += users_detail.dues
     end
+    puts "total: #{total_dues}"
   end
 end

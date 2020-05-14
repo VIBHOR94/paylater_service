@@ -42,7 +42,7 @@ class User < ApplicationRecord
   end
 
   def self.fetch_name_and_dues
-    select('name, dues')
+    select('name, dues').where('dues > 0')
   end
 
   def payback(amount)

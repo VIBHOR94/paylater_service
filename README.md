@@ -4,12 +4,14 @@ A simple command line application to handle user, merchant and transactions for 
 
 Dependencies -
 
-* Postgresql database
+* Postgresql database - 12.2
 * Ruby 2.6.3
 
 ### Installing
 
 * Create a database named paylater_service_db
+
+* Create another database named paylater_service_db_test (for test environment)
 
 * Create/Assign a user with access to this database
 
