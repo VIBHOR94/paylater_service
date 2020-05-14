@@ -6,6 +6,7 @@ require_relative './services/validations_service/command_validation_service.rb'
 def initiate_service
   puts greeting_message
   puts 'Please enter a command to get started.'
+  puts 'Kindly refer to usage.txt for list of commands'
   puts "Type 'exit' or press Ctrl + C to exit"
   process_inputs
 end

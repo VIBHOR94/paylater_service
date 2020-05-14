@@ -1,0 +1,17 @@
+new user user1 u1@users.com 300  #name, email, credit-limit
+
+new merchant m2 m2@merchants.com 1.5% #name, email, discount-percentage
+
+new txn u1 m2 400 #user, merchant, txn-amount
+
+update merchant m1 interest 1% #merchant, 'interest' , new-discount-rate (Use the word interest to represent field)
+
+payback u1 300 # user, payback-amount
+
+report discount m1
+
+report dues u1
+
+report users-at-credit-limit
+
+report total-dues
