@@ -28,4 +28,4 @@ Dependencies -
 
 * Run `ruby initialize.rb` to start the application
 
-* Run `rspec` to start the application.
+* Run `rspec` to start running test cases for the application.
