@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'activerecord', '~> 5.0', '>= 5.0.0.1'
+gem 'activerecord', '~> 6.1'
 gem 'pg', '~> 0.18.4'
 
 gem 'rspec', require: false
